@@ -17,9 +17,6 @@
   --ink:#7A2E57;
   --ink-soft:#C48BA6;
   --white:#FFF9FB;
-  --win-gray:#F6EAF1;
-  --win-blue:#FF7DB0;
-  --win-blue-dark:#E86FA0;
   --pixel-shadow:3px 3px 0 rgba(230,30,120,.20);
 }
 
@@ -30,11 +27,10 @@ body{
   background:linear-gradient(180deg,var(--pink-bg) 0%,var(--pink-bg2) 100%);
   color:var(--ink);
   overflow:hidden;
-  image-rendering:pixelated;
   -webkit-font-smoothing:none;
 }
 
-/* 像素花朵/爱心装饰 */
+/* 漂浮爱心装饰 */
 .deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .deco span{position:absolute;font-size:14px;opacity:.5;animation:floatUp linear infinite;}
 @keyframes floatUp{
@@ -51,8 +47,7 @@ body{
 }
 .card{
   background:transparent;
-  border:none;
-  border-radius:0;
+  border:none;border-radius:0;
   padding:30px 24px;
   box-shadow:none;
   width:100%;max-width:380px;
@@ -60,8 +55,7 @@ body{
   animation:popIn .4s steps(4) both;
 }
 @keyframes popIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:none;}}
-/* 初始隐藏的页面卡片：避免入场动画卡在透明状态 */
-#s-quiz .card,#s-done .card{animation:none;opacity:1;}
+#s-step .card,#s-done .card{animation:none;}
 
 /* 像素画框 */
 .pixel-frame{
@@ -73,9 +67,7 @@ body{
   box-shadow:var(--pixel-shadow);
   overflow:hidden;
 }
-.pixel-frame::before,.pixel-frame::after{
-  content:"✿";position:absolute;font-size:18px;color:var(--pink-mid);z-index:2;
-}
+.pixel-frame::before,.pixel-frame::after{content:"✿";position:absolute;font-size:18px;color:var(--pink-mid);z-index:2;}
 .pixel-frame::before{top:-10px;left:-10px;}
 .pixel-frame::after{bottom:-10px;right:-10px;}
 .pixel-frame .big{font-size:64px;filter:drop-shadow(2px 2px 0 rgba(230,30,120,.25));}
@@ -88,44 +80,39 @@ body{
   display:inline-flex;align-items:center;justify-content:center;gap:4px;
   border:3px solid var(--pink-darker);
   background:var(--pink-dark);color:var(--white);
-  font-family:inherit;font-size:20px;font-weight:bold;
-  padding:15px 40px;cursor:pointer;
+  font-family:inherit;font-size:18px;font-weight:bold;
+  padding:14px 34px;cursor:pointer;
   box-shadow:var(--pixel-shadow);
   border-radius:0;
   transition:transform .1s steps(2),box-shadow .1s;
-  image-rendering:pixelated;
 }
 .pbtn:disabled{opacity:.55;cursor:not-allowed;}
+.pbtn-back{background:var(--pink-light);color:var(--pink-darker);flex:1;}
 
-/* 答题屏：整页可滚动 */
-#s-quiz{display:none;overflow-y:auto;align-items:flex-start;justify-content:flex-start;}
-#s-quiz .card{max-width:420px;margin:0 auto;text-align:left;padding:24px 20px 34px;}
-.quiz-head{text-align:center;margin-bottom:4px;}
-.quiz-head .title{font-size:20px;}
-.quiz-head .subtitle{margin-bottom:18px;}
-.name-row{margin:8px 0 18px;}
-.name-row label{font-size:15px;color:var(--ink);display:block;margin-bottom:6px;font-weight:bold;}
-.name-row input{
-  width:100%;border:3px solid var(--pink-darker);background:var(--white);
-  padding:11px 12px;font-size:16px;color:var(--ink);font-family:inherit;outline:none;
-}
-.q-item{margin-bottom:18px;}
-.q-item .q-no{
-  display:inline-block;background:var(--pink-dark);color:#fff;
-  font-size:12px;padding:3px 8px;margin-right:6px;
+/* 逐题页 */
+#s-step{display:none;overflow-y:auto;}
+#s-step .card{max-width:380px;margin:0 auto;text-align:left;padding:26px 22px 30px;}
+.progress{
+  font-size:13px;color:var(--ink-soft);margin-bottom:12px;text-align:center;
   font-family:"Press Start 2P",monospace;
 }
-.q-item p{font-size:17px;color:var(--ink);font-weight:bold;margin:8px 0 8px;line-height:1.5;}
-.q-item textarea{
-  width:100%;border:3px solid var(--pink-dark);background:var(--white);
-  color:var(--ink);padding:10px 12px;font-size:15px;font-family:inherit;
-  outline:none;resize:vertical;min-height:58px;border-radius:0;
+.progress .cur{color:var(--pink-darker);}
+.label{
+  font-size:19px;color:var(--pink-darker);font-weight:bold;line-height:1.7;
+  text-align:center;margin:4px 0 22px;
 }
-.q-item textarea:focus{border-color:var(--pink-darker);}
-.quiz-hint{font-size:13px;color:var(--ink-soft);margin:2px 0 18px;line-height:1.6;}
-.pbtn-send{width:100%;}
-
-.send-status{margin-top:12px;font-size:14px;line-height:1.6;text-align:center;}
+.step-body .field{
+  width:100%;border:3px solid var(--pink-dark);background:var(--white);
+  color:var(--ink);padding:12px;font-size:16px;font-family:inherit;
+  outline:none;border-radius:0;
+}
+.step-body input.field{height:50px;}
+.step-body textarea.field{min-height:130px;resize:vertical;line-height:1.7;}
+.step-body .field:focus{border-color:var(--pink-darker);}
+.step-body .hint{font-size:13px;color:var(--ink-soft);margin-top:8px;text-align:center;}
+.step-nav{display:flex;gap:12px;margin-top:24px;}
+.step-nav .pbtn-next{flex:2;}
+.send-status{margin-top:14px;font-size:14px;line-height:1.6;text-align:center;}
 .send-fail{color:#C44;}
 .send-fail a{color:#C44;font-weight:bold;word-break:break-all;}
 
@@ -158,26 +145,26 @@ body{
     <div class="pixel-frame"><span class="big">❤</span></div>
     <h1 class="title">默契大测试</h1>
     <p class="subtitle">下面有 6 道题，不用多想，<br>如实回答就好。<br>你答完，答案会悄悄回到我这里。<br>猜对几题，就看我们有没有缘分啦。</p>
-    <div class="btn-wrap" style="margin-top:24px;">
+    <div style="margin-top:24px;">
       <button class="pbtn" id="startBtn">开始答题 →</button>
     </div>
   </div>
 </section>
 
-<!-- 2 答题页 -->
-<section class="screen" id="s-quiz">
+<!-- 2 逐题答题页 -->
+<section class="screen" id="s-step">
   <div class="card">
-    <div class="quiz-head">
-      <h1 class="title">默契大测试</h1>
-      <p class="subtitle">共 6 题，每题填一句真心话就好。</p>
+    <div class="progress">第 <span class="cur" id="progCur">1</span> / <span id="progTotal">7</span> 步</div>
+    <p class="label" id="stepLabel">先告诉我，怎么称呼你呢？</p>
+    <div class="step-body">
+      <input class="field" id="nickInput" type="text" placeholder="写下你的名字或昵称" style="display:none">
+      <textarea class="field" id="answerInput" placeholder="这里写你的答案…" style="display:none"></textarea>
     </div>
-    <div class="name-row">
-      <label for="nickInput">先告诉我，怎么称呼你呢？</label>
-      <input id="nickInput" type="text" placeholder="写下你的名字或昵称">
+    <p class="hint" id="stepHint"></p>
+    <div class="step-nav">
+      <button class="pbtn pbtn-back" id="stepBack">← 上一题</button>
+      <button class="pbtn pbtn-next" id="stepNext">下一题 →</button>
     </div>
-    <div id="quizList"></div>
-    <p class="quiz-hint">写完就可以点下面的按钮啦，答案会直接送到我这里 ❤</p>
-    <button class="pbtn pbtn-send" id="submitBtn">答完了，送给你 💌</button>
     <div class="send-status" id="sendStatus"></div>
   </div>
 </section>
@@ -237,48 +224,73 @@ body{
   }
 
   function show(id){
-    var screens=['s-intro','s-quiz','s-done'];
+    var screens=['s-intro','s-step','s-done'];
     screens.forEach(function(sid){
-      document.getElementById(sid).style.display = (sid===id) ? 'flex' : 'none';
+      document.getElementById(sid).style.display=(sid===id)?'flex':'none';
     });
   }
 
-  // 渲染题目
-  var quizList=document.getElementById('quizList');
-  QUESTIONS.forEach(function(q,i){
-    var d=document.createElement('div');d.className='q-item';
-    var head=document.createElement('div');
-    head.style.cssText='display:flex;align-items:center;gap:8px;';
-    var no=document.createElement('span');no.className='q-no';no.textContent=(i+1);
-    var title=document.createElement('p');title.textContent=q;
-    head.appendChild(no);head.appendChild(title);
-    var ta=document.createElement('textarea');
-    ta.placeholder='这里写你的答案…';
-    d.appendChild(head);d.appendChild(ta);
-    quizList.appendChild(d);
-  });
+  // ---- 步骤定义：第1步是称呼，之后每题一步 ----
+  var steps=[{k:'name',label:'先告诉我，怎么称呼你呢？',ph:'写下你的名字或昵称'}];
+  QUESTIONS.forEach(function(q){ steps.push({k:'q',label:q}); });
 
-  document.getElementById('startBtn').onclick=function(){
-    document.getElementById('s-quiz').scrollTop=0;
-    show('s-quiz');
-  };
-
-  var submitBtn=document.getElementById('submitBtn');
+  var cur=0;
+  var nickEl=document.getElementById('nickInput');
+  var ansEl=document.getElementById('answerInput');
+  var labelEl=document.getElementById('stepLabel');
+  var progCur=document.getElementById('progCur');
+  var progTotal=document.getElementById('progTotal');
+  var hintEl=document.getElementById('stepHint');
+  var backBtn=document.getElementById('stepBack');
+  var nextBtn=document.getElementById('stepNext');
   var sendStatus=document.getElementById('sendStatus');
+  var answers={};
+  progTotal.textContent=steps.length;
 
-  submitBtn.onclick=function(){
-    var nick=(document.getElementById('nickInput').value||'').trim()||'（未留名）';
-    var qs=quizList.querySelectorAll('textarea');
-    var answers={};var full='';
-    var empty=0;
-    QUESTIONS.forEach(function(q,i){
-      var v=qs[i].value.trim();
-      answers['Q'+(i+1)]=v;
-      full+='Q'+(i+1)+'. '+q+'\n答：'+(v||'（没写）')+'\n\n';
-      if(!v)empty++;
-    });
+  function render(){
+    progCur.textContent=(cur+1);
+    var st=steps[cur];
+    labelEl.textContent=st.label;
+    if(st.k==='name'){
+      nickEl.style.display='block';ansEl.style.display='none';
+      hintEl.textContent='写个称呼就好，我会记得是你。';
+    }else{
+      nickEl.style.display='none';ansEl.style.display='block';
+      ansEl.value=answers[cur]||'';
+      answerInput.focus();
+      hintEl.textContent='第 '+cur+' 题，想到什么写什么。';
+    }
+    backBtn.style.visibility=(cur===0)?'hidden':'visible';
+    nextBtn.textContent=(cur===steps.length-1)?'答完了，送给你 💌':'下一题 →';
+  }
+
+  function next(){
+    var st=steps[cur];
+    if(st.k==='name'){ answers[cur]=nickEl.value.trim(); }
+    else{ answers[cur]=ansEl.value.trim(); }
+    if(cur<steps.length-1){
+      cur++;
+      sendStatus.className='send-status';sendStatus.textContent='';
+      nextBtn.disabled=false;nextBtn.textContent='下一题 →';
+      render();
+    }else{
+      submit();
+    }
+  }
+
+  function back(){
+    if(cur>0){ cur--; sendStatus.className='send-status';sendStatus.textContent=''; render(); }
+  }
+
+  function submit(){
+    var nick=answers[0]||'（未留名）';
+    var full='';
+    for(var i=1;i<steps.length;i++){
+      var v=answers[i]||'';
+      full+='Q'+(i)+'. '+QUESTIONS[i-1]+'\n答：'+(v||'（没写）')+'\n\n';
+    }
     var txt='怎么称呼：'+nick+'\n\n'+full;
-    submitBtn.disabled=true;submitBtn.textContent='发送中…';
+    nextBtn.disabled=true;nextBtn.textContent='发送中…';
     sendStatus.className='send-status';sendStatus.textContent='';
 
     var payload={
@@ -286,12 +298,8 @@ body{
       _captcha:'false',
       _template:'table',
       '称呼':nick,
-      'Q1':answers['Q1'],
-      'Q2':answers['Q2'],
-      'Q3':answers['Q3'],
-      'Q4':answers['Q4'],
-      'Q5':answers['Q5'],
-      'Q6':answers['Q6'],
+      'Q1':answers[1],'Q2':answers[2],'Q3':answers[3],
+      'Q4':answers[4],'Q5':answers[5],'Q6':answers[6],
       message:txt
     };
 
@@ -300,24 +308,30 @@ body{
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify(payload)
     }).then(function(r){return r.json();}).then(function(d){
-      if(d && d.success==='false'){
-        throw new Error(d.message||'发送失败');
-      }
+      if(d && d.success==='false'){ throw new Error(d.message||'发送失败'); }
       confetti();
       show('s-done');
     }).catch(function(){
       sendStatus.className='send-status send-fail';
       var mailto='mailto:'+RECEIVE_EMAIL+'?subject='+encodeURIComponent('【默契大测试】'+nick+'答完啦')+'&body='+encodeURIComponent(txt);
       sendStatus.innerHTML='没发送成功，也可以点这里用邮箱发到我这 👉 <a href="'+mailto+'">点此发送</a>';
-      submitBtn.disabled=false;submitBtn.textContent='再试一次 💌';
+      nextBtn.disabled=false;nextBtn.textContent='答完了，送给你 💌';
     });
+  }
+
+  document.getElementById('startBtn').onclick=function(){
+    cur=0;render();
+    document.getElementById('s-step').scrollTop=0;
+    show('s-step');
   };
+  nextBtn.onclick=next;
+  backBtn.onclick=back;
 
   document.getElementById('replayBtn').onclick=function(){
-    document.getElementById('nickInput').value='';
-    quizList.querySelectorAll('textarea').forEach(function(t){t.value='';});
+    cur=0;answers={};
+    nickEl.value='';ansEl.value='';
     sendStatus.className='send-status';sendStatus.textContent='';
-    submitBtn.disabled=false;submitBtn.textContent='答完了，送给你 💌';
+    nextBtn.disabled=false;
     show('s-intro');
   };
 
