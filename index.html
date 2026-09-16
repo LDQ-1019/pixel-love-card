@@ -257,7 +257,7 @@ body{
     }else{
       nickEl.style.display='none';ansEl.style.display='block';
       ansEl.value=answers[cur]||'';
-      answerInput.focus();
+      ansEl.focus();
       hintEl.textContent='第 '+cur+' 题，想到什么写什么。';
     }
     backBtn.style.visibility=(cur===0)?'hidden':'visible';
