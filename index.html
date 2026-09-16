@@ -239,7 +239,7 @@ body{
   function show(id){
     var screens=['s-intro','s-quiz','s-done'];
     screens.forEach(function(sid){
-      document.getElementById(sid).style.display = (sid===id) ? '' : 'none';
+      document.getElementById(sid).style.display = (sid===id) ? 'flex' : 'none';
     });
   }
 
