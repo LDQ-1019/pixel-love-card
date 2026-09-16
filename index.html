@@ -144,7 +144,7 @@ body{
   <div class="card">
     <div class="pixel-frame"><span class="big">❤</span></div>
     <h1 class="title">默契大测试</h1>
-    <p class="subtitle">下面有 6 道题，不用多想，<br>如实回答就好。<br>你答完，答案会悄悄回到我这里。<br>猜对几题，就看我们有没有缘分啦。</p>
+    <p class="subtitle">下面有 6 道题，不用多想，<br>想到什么就写什么。<br>我们会不会不谋而合，<br>等你说完就见分晓啦。</p>
     <div style="margin-top:24px;">
       <button class="pbtn" id="startBtn">开始答题 →</button>
     </div>
@@ -173,13 +173,14 @@ body{
 <section class="screen" id="s-done">
   <div class="card">
     <div class="done-heart">❤</div>
-    <h1 class="title">答案收到啦</h1>
+    <h1 class="title">默契就是，不用说的那种懂</h1>
     <div class="final-dialog">
       <p>你还记得咱俩第一次见面是什么时候吗？</p>
       <p class="resp">不记得啦</p>
       <p class="mono">那是在138亿年前，当宇宙还是一个小小的点，我们身体的所有元素都来自这个点爆炸散落的万千星辰。所以严格地说，138亿年前，我们就已经见过了。</p>
+      <p>答案对不对，其实不重要。<br>和你想到一块儿去，就是正确答案。</p>
     </div>
-    <p class="done-note">你的每一题答案，都已经送到我这里了。</p>
+    <p class="done-note">谢谢你认真陪我解完这些题。</p>
     <button class="replay" id="replayBtn">再看一次</button>
   </div>
 </section>
@@ -313,8 +314,7 @@ body{
       show('s-done');
     }).catch(function(){
       sendStatus.className='send-status send-fail';
-      var mailto='mailto:'+RECEIVE_EMAIL+'?subject='+encodeURIComponent('【默契大测试】'+nick+'答完啦')+'&body='+encodeURIComponent(txt);
-      sendStatus.innerHTML='没发送成功，也可以点这里用邮箱发到我这 👉 <a href="'+mailto+'">点此发送</a>';
+      sendStatus.textContent='咦，好像没送出去，再按一次试试。';
       nextBtn.disabled=false;nextBtn.textContent='答完了，送给你 💌';
     });
   }
