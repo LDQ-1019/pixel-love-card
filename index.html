@@ -60,6 +60,8 @@ body{
   animation:popIn .4s steps(4) both;
 }
 @keyframes popIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:none;}}
+/* 初始隐藏的页面卡片：避免入场动画卡在透明状态 */
+#s-quiz .card,#s-done .card{animation:none;opacity:1;}
 
 /* 像素画框 */
 .pixel-frame{
