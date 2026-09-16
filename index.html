@@ -5,155 +5,140 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>默契大测试</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap');
-
 :root{
-  --pink-bg:#FFDCEA;
-  --pink-bg2:#FFC2DD;
-  --pink-dark:#FF5C9B;
-  --pink-darker:#E6307E;
-  --pink-mid:#FF8FB9;
-  --pink-light:#FFC9DE;
-  --ink:#7A2E57;
-  --ink-soft:#C48BA6;
-  --white:#FFF9FB;
-  --pixel-shadow:3px 3px 0 rgba(230,30,120,.20);
+  --sky1:#A8D8F0;
+  --sky2:#EAF7FF;
+  --sea:#5Bc6e0;
+  --sea-deep:#2E9BC4;
+  --lemon:#FFD966;
+  --sand:#FFF7E6;
+  --ink:#2C5F7C;
+  --ink-soft:#7FA9BE;
+  --white:#FFFFFF;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;}
 body{
-  font-family:"ZCOOL KuaiLe","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
-  background:linear-gradient(180deg,var(--pink-bg) 0%,var(--pink-bg2) 100%);
+  font-family:"Baloo 2","Quicksand","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 60%,#EFF9FF 100%);
   color:var(--ink);
   overflow:hidden;
-  -webkit-font-smoothing:none;
 }
 
-/* 漂浮爱心装饰 */
+/* 云朵 */
+.cloud{position:absolute;background:#fff;border-radius:999px;opacity:.9;}
+.cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%;}
 .deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.deco span{position:absolute;font-size:14px;opacity:.5;animation:floatUp linear infinite;}
-@keyframes floatUp{
-  0%{transform:translateY(100vh) rotate(0);opacity:0;}
-  10%{opacity:.6;}
-  90%{opacity:.4;}
-  100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}
-}
+.deco .c1{width:120px;height:34px;top:8%;left:8%;animation:drift 26s linear infinite;}
+.deco .c1::before{width:70px;height:70px;left:20px;top:-34px;}
+.deco .c1::after{width:60px;height:60px;right:10px;top:-26px;}
+.deco .c2{width:96px;height:28px;top:16%;right:12%;animation:drift 34s linear infinite;}
+.deco .c2::before{width:56px;height:56px;left:16px;top:-28px;}
+.deco .c2::after{width:48px;height:48px;right:8px;top:-22px;}
+.deco .c3{width:80px;height:24px;top:6%;left:55%;animation:drift 40s linear infinite;}
+.deco .c3::before{width:46px;height:46px;left:12px;top:-24px;}
+@keyframes drift{0%{transform:translateX(0);}100%{transform:translateX(60px);}}
 
 .screen{
   position:relative;z-index:1;height:100%;width:100%;
   display:flex;align-items:center;justify-content:center;flex-direction:column;
-  padding:20px 16px;text-align:center;
+  padding:24px 18px;text-align:center;
 }
+
+/* 开场页大图 */
+.hero-img{
+  width:100%;max-width:360px;height:auto;aspect-ratio:4/3;object-fit:cover;
+  border-radius:24px;border:4px solid #fff;box-shadow:0 14px 34px rgba(46,155,196,.28);
+  display:block;margin:0 auto 18px;
+}
+
 .card{
-  background:transparent;
-  border:none;border-radius:0;
-  padding:30px 24px;
-  box-shadow:none;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(4px);
+  border-radius:26px;
+  padding:26px 22px;
+  box-shadow:0 12px 30px rgba(46,155,196,.18);
   width:100%;max-width:380px;
   position:relative;
-  animation:popIn .4s steps(4) both;
+  border:2px solid rgba(255,255,255,.6);
 }
-@keyframes popIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:none;}}
-#s-step .card,#s-done .card{animation:none;}
+.title{font-size:26px;font-weight:800;color:var(--sea-deep);line-height:1.4;margin-bottom:6px;}
+.subtitle{font-size:15px;color:var(--ink-soft);line-height:1.8;margin-top:6px;}
 
-/* 像素画框 */
-.pixel-frame{
-  width:180px;height:150px;margin:0 auto 16px;
-  border:4px solid var(--pink-dark);
-  background:linear-gradient(135deg,#FFF5F9,#FFE0EE);
-  display:flex;align-items:center;justify-content:center;
-  position:relative;
-  box-shadow:var(--pixel-shadow);
-  overflow:hidden;
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  border:none;border-radius:999px;
+  background:linear-gradient(135deg,var(--sea) 0%,var(--sea-deep) 100%);
+  color:#fff;font-family:inherit;font-size:18px;font-weight:700;
+  padding:16px 40px;cursor:pointer;
+  box-shadow:0 10px 22px rgba(46,155,196,.4);
+  transition:transform .15s ease,box-shadow .15s ease;
 }
-.pixel-frame::before,.pixel-frame::after{content:"✿";position:absolute;font-size:18px;color:var(--pink-mid);z-index:2;}
-.pixel-frame::before{top:-10px;left:-10px;}
-.pixel-frame::after{bottom:-10px;right:-10px;}
-.pixel-frame .big{font-size:64px;filter:drop-shadow(2px 2px 0 rgba(230,30,120,.25));}
-
-.title{font-size:22px;font-weight:bold;color:var(--pink-darker);line-height:1.5;margin-bottom:4px;}
-.subtitle{font-size:14px;color:var(--ink-soft);margin-top:6px;line-height:1.7;}
-
-/* 像素按钮 */
-.pbtn{
-  display:inline-flex;align-items:center;justify-content:center;gap:4px;
-  border:3px solid var(--pink-darker);
-  background:var(--pink-dark);color:var(--white);
-  font-family:inherit;font-size:18px;font-weight:bold;
-  padding:14px 34px;cursor:pointer;
-  box-shadow:var(--pixel-shadow);
-  border-radius:0;
-  transition:transform .1s steps(2),box-shadow .1s;
-}
-.pbtn:disabled{opacity:.55;cursor:not-allowed;}
-.pbtn-back{background:var(--pink-light);color:var(--pink-darker);flex:1;}
+.btn:hover{transform:translateY(-2px);}
+.btn:disabled{opacity:.6;cursor:not-allowed;}
+.btn-back{background:#EAF3F8;color:var(--sea-deep);box-shadow:none;flex:1;}
 
 /* 逐题页 */
 #s-step{display:none;overflow-y:auto;}
-#s-step .card{max-width:380px;margin:0 auto;text-align:left;padding:26px 22px 30px;}
-.progress{
-  font-size:13px;color:var(--ink-soft);margin-bottom:12px;text-align:center;
-  font-family:"Press Start 2P",monospace;
-}
-.progress .cur{color:var(--pink-darker);}
-.label{
-  font-size:19px;color:var(--pink-darker);font-weight:bold;line-height:1.7;
-  text-align:center;margin:4px 0 22px;
-}
+#s-step .card{text-align:left;padding:24px 20px 28px;}
+.progress{font-size:13px;color:var(--ink-soft);margin-bottom:12px;text-align:center;font-weight:600;}
+.progress .cur{color:var(--sea-deep);font-weight:800;}
+.label{font-size:20px;color:var(--sea-deep);font-weight:800;line-height:1.7;text-align:center;margin:4px 0 22px;}
 .step-body .field{
-  width:100%;border:3px solid var(--pink-dark);background:var(--white);
-  color:var(--ink);padding:12px;font-size:16px;font-family:inherit;
-  outline:none;border-radius:0;
+  width:100%;border:2px solid #CFE6F2;background:#F8FCFF;color:var(--ink);
+  padding:13px;font-size:16px;font-family:inherit;outline:none;border-radius:16px;
 }
-.step-body input.field{height:50px;}
-.step-body textarea.field{min-height:130px;resize:vertical;line-height:1.7;}
-.step-body .field:focus{border-color:var(--pink-darker);}
+.step-body input.field{height:52px;}
+.step-body textarea.field{min-height:132px;resize:vertical;line-height:1.7;}
+.step-body .field:focus{border-color:var(--sea-deep);box-shadow:0 0 0 3px rgba(46,155,196,.15);}
 .step-body .hint{font-size:13px;color:var(--ink-soft);margin-top:8px;text-align:center;}
 .step-nav{display:flex;gap:12px;margin-top:24px;}
-.step-nav .pbtn-next{flex:2;}
+.step-nav .btn-next{flex:2;}
 .send-status{margin-top:14px;font-size:14px;line-height:1.6;text-align:center;}
-.send-fail{color:#C44;}
-.send-fail a{color:#C44;font-weight:bold;word-break:break-all;}
+.send-fail{color:#d9764f;}
 
 /* 结尾页 */
 #s-done{display:none;}
-.done-heart{font-size:52px;margin:6px 0;filter:drop-shadow(2px 2px 0 rgba(230,30,120,.25));}
+.done-heart{font-size:46px;margin:4px 0; }
 .final-dialog{
-  background:var(--white);border:3px solid var(--pink-dark);
-  box-shadow:var(--pixel-shadow);
-  padding:22px 20px;margin:16px auto 8px;max-width:380px;
-  text-align:left;
+  background:#F8FCFF;border:2px solid #CFE6F2;border-radius:18px;
+  padding:20px 18px;margin:16px auto 6px;max-width:380px;text-align:left;
 }
-.final-dialog p{font-size:16px;line-height:1.8;color:var(--ink);margin-bottom:14px;}
-.final-dialog .resp{color:var(--pink-mid);font-style:italic;}
-.final-dialog .mono{color:var(--pink-darker);font-weight:bold;}
+.final-dialog p{font-size:15px;line-height:1.8;color:var(--ink);margin-bottom:14px;}
+.final-dialog .resp{color:var(--sea-deep);font-weight:700;}
+.final-dialog .mono{color:#D9764F;font-weight:700;}
 .done-note{font-size:13px;color:var(--ink-soft);margin-top:4px;}
-.replay{display:block;margin:16px auto 0;font-size:13px;color:var(--pink-mid);border:none;background:none;cursor:pointer;text-decoration:underline;}
+.replay{display:block;margin:16px auto 0;font-size:14px;color:var(--sea-deep);border:none;background:none;cursor:pointer;text-decoration:underline;font-weight:600;}
 
+/* 撒花 */
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden;}
-.confetti i{position:absolute;top:-10px;width:10px;height:16px;animation:confFall linear forwards;}
+.confetti i{position:absolute;top:-10px;width:12px;height:12px;border-radius:50%;animation:confFall linear forwards;}
 @keyframes confFall{0%{transform:translateY(-10vh) rotate(0);opacity:1;}100%{transform:translateY(108vh) rotate(720deg);opacity:0;}}
 </style>
 </head>
 <body>
-<div class="deco" id="deco"></div>
+<div class="deco">
+  <span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span>
+</div>
 
 <!-- 1 开场页 -->
 <section class="screen" id="s-intro">
-  <div class="card">
-    <div class="pixel-frame"><span class="big">❤</span></div>
-    <h1 class="title">默契大测试</h1>
-    <p class="subtitle">下面有 6 道题，不用多想，<br>想到什么就写什么。<br>我们会不会不谋而合，<br>等你说完就见分晓啦。</p>
-    <div style="margin-top:24px;">
-      <button class="pbtn" id="startBtn">开始答题 →</button>
+  <div style="width:100%;max-width:380px;margin:0 auto;display:flex;flex-direction:column;align-items:center;">
+    <img class="hero-img" src="opening.png" alt="海边">
+    <div class="card">
+      <h1 class="title">默契大测试</h1>
+      <p class="subtitle">下面有 6 道题，不用多想，<br>想到什么就写什么。<br>我们会不会不谋而合，<br>等你说完就见分晓啦。</p>
+      <div style="margin-top:22px;">
+        <button class="btn" id="startBtn">开始答题 →</button>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- 2 逐题答题页 -->
 <section class="screen" id="s-step">
-  <div class="card">
+  <div class="card" style="max-width:380px;margin:auto;">
     <div class="progress">第 <span class="cur" id="progCur">1</span> / <span id="progTotal">7</span> 步</div>
     <p class="label" id="stepLabel">先告诉我，怎么称呼你呢？</p>
     <div class="step-body">
@@ -162,8 +147,8 @@ body{
     </div>
     <p class="hint" id="stepHint"></p>
     <div class="step-nav">
-      <button class="pbtn pbtn-back" id="stepBack">← 上一题</button>
-      <button class="pbtn pbtn-next" id="stepNext">下一题 →</button>
+      <button class="btn btn-back" id="stepBack">← 上一题</button>
+      <button class="btn btn-next" id="stepNext">下一题 →</button>
     </div>
     <div class="send-status" id="sendStatus"></div>
   </div>
@@ -172,7 +157,7 @@ body{
 <!-- 3 结尾页 -->
 <section class="screen" id="s-done">
   <div class="card">
-    <div class="done-heart">❤</div>
+    <div class="done-heart">🌊❤️</div>
     <h1 class="title">默契就是，不用说的那种懂</h1>
     <div class="final-dialog">
       <p>你还记得咱俩第一次见面是什么时候吗？</p>
@@ -190,7 +175,6 @@ body{
   var RECEIVE_EMAIL='3551469980@qq.com';
   var FORM_ENDPOINT='https://formsubmit.co/ajax/'+RECEIVE_EMAIL;
 
-  // ---- 6 道开放式题目(想改文字改这里) ----
   var QUESTIONS=[
     "你喜欢出去玩还是宅在家里？",
     "你的农历生日是？",
@@ -200,24 +184,12 @@ body{
     "如果我给你打视频电话，你会同意吗？"
   ];
 
-  // 漂浮爱心装饰
-  (function(){
-    var icons=['♥','✿','❀','🌸','♡'];
-    var box=document.getElementById('deco');
-    for(var i=0;i<30;i++){
-      var s=document.createElement('span');
-      s.textContent=icons[Math.floor(Math.random()*icons.length)];
-      s.style.cssText='left:'+(Math.random()*100)+'%;animation-duration:'+(7+Math.random()*8)+'s;animation-delay:'+(Math.random()*12)+'s;font-size:'+(12+Math.random()*10)+'px;';
-      box.appendChild(s);
-    }
-  })();
-
   function confetti(){
     var c=document.createElement('div');c.className='confetti';
-    var colors=['#FF6FA5','#FF9EC8','#FFD166','#8FD694','#BFA6CC'];
-    for(var i=0;i<36;i++){
+    var colors=['#A8D8F0','#FFD966','#FF8FB9','#8FD694','#BFA6CC'];
+    for(var i=0;i<40;i++){
       var e=document.createElement('i');
-      e.style.cssText='left:'+(Math.random()*100)+'%;background:'+colors[Math.floor(Math.random()*colors.length)]+';animation-duration:'+(2+Math.random()*2.5)+'s;animation-delay:'+(Math.random()*.6)+'s;';
+      e.style.cssText='left:'+(Math.random()*100)+'%;background:'+colors[Math.floor(Math.random()*colors.length)]+';width:'+(9+Math.random()*8)+'px;height:'+(9+Math.random()*8)+'px;animation-duration:'+(2+Math.random()*2.5)+'s;animation-delay:'+(Math.random()*.6)+'s;';
       c.appendChild(e);
     }
     document.body.appendChild(c);
@@ -231,7 +203,6 @@ body{
     });
   }
 
-  // ---- 步骤定义：第1步是称呼，之后每题一步 ----
   var steps=[{k:'name',label:'先告诉我，怎么称呼你呢？',ph:'写下你的名字或昵称'}];
   QUESTIONS.forEach(function(q){ steps.push({k:'q',label:q}); });
 
