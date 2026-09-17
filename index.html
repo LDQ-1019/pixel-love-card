@@ -122,6 +122,22 @@ body{
   <span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span>
 </div>
 
+<!-- 0 登录页 -->
+<section class="screen" id="s-login">
+  <div class="card" style="max-width:380px;margin:auto;">
+    <h1 class="title">专属秘密空间</h1>
+    <p class="subtitle">输入专属账号密码<br>才能进来哦</p>
+    <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px;">
+      <input class="field" type="text" id="userInput" placeholder="账号" style="text-align:center;height:48px;">
+      <input class="field" type="password" id="pwInput" placeholder="密码" style="text-align:center;height:48px;">
+    </div>
+    <div style="margin-top:22px;">
+      <button class="btn" id="pwBtn" style="width:100%;">进入 →</button>
+    </div>
+    <div class="send-status" id="pwMsg"></div>
+  </div>
+</section>
+
 <!-- 1 开场页 -->
 <section class="screen" id="s-intro">
   <div style="width:100%;max-width:380px;margin:0 auto;display:flex;flex-direction:column;align-items:center;">
@@ -139,10 +155,9 @@ body{
 <!-- 2 逐题答题页 -->
 <section class="screen" id="s-step">
   <div class="card" style="max-width:380px;margin:auto;">
-    <div class="progress">第 <span class="cur" id="progCur">1</span> / <span id="progTotal">7</span> 步</div>
-    <p class="label" id="stepLabel">先告诉我，怎么称呼你呢？</p>
+    <div class="progress">第 <span class="cur" id="progCur">1</span> / <span id="progTotal">6</span> 题</div>
+    <p class="label" id="stepLabel">第 1 题</p>
     <div class="step-body">
-      <input class="field" id="nickInput" type="text" placeholder="写下你的名字或昵称" style="display:none">
       <textarea class="field" id="answerInput" placeholder="这里写你的答案…" style="display:none"></textarea>
     </div>
     <p class="hint" id="stepHint"></p>
@@ -197,17 +212,16 @@ body{
   }
 
   function show(id){
-    var screens=['s-intro','s-step','s-done'];
+    var screens=['s-login','s-intro','s-step','s-done'];
     screens.forEach(function(sid){
       document.getElementById(sid).style.display=(sid===id)?'flex':'none';
     });
   }
 
-  var steps=[{k:'name',label:'先告诉我，怎么称呼你呢？',ph:'写下你的名字或昵称'}];
+  var steps=[];
   QUESTIONS.forEach(function(q){ steps.push({k:'q',label:q}); });
 
   var cur=0;
-  var nickEl=document.getElementById('nickInput');
   var ansEl=document.getElementById('answerInput');
   var labelEl=document.getElementById('stepLabel');
   var progCur=document.getElementById('progCur');
@@ -222,24 +236,17 @@ body{
   function render(){
     progCur.textContent=(cur+1);
     var st=steps[cur];
-    labelEl.textContent=st.label;
-    if(st.k==='name'){
-      nickEl.style.display='block';ansEl.style.display='none';
-      hintEl.textContent='写个称呼就好，我会记得是你。';
-    }else{
-      nickEl.style.display='none';ansEl.style.display='block';
-      ansEl.value=answers[cur]||'';
-      ansEl.focus();
-      hintEl.textContent='第 '+cur+' 题，想到什么写什么。';
-    }
+    labelEl.textContent='第 '+(cur+1)+' 题';
+    ansEl.style.display='block';
+    ansEl.value=answers[cur]||'';
+    ansEl.focus();
+    hintEl.textContent='第 '+(cur+1)+' 题，想到什么写什么。';
     backBtn.style.visibility=(cur===0)?'hidden':'visible';
     nextBtn.textContent=(cur===steps.length-1)?'答完了，送给你 💌':'下一题 →';
   }
 
   function next(){
-    var st=steps[cur];
-    if(st.k==='name'){ answers[cur]=nickEl.value.trim(); }
-    else{ answers[cur]=ansEl.value.trim(); }
+    answers[cur]=ansEl.value.trim();
     if(cur<steps.length-1){
       cur++;
       sendStatus.className='send-status';sendStatus.textContent='';
@@ -255,24 +262,21 @@ body{
   }
 
   function submit(){
-    var nick=answers[0]||'（未留名）';
     var full='';
-    for(var i=1;i<steps.length;i++){
+    for(var i=0;i<steps.length;i++){
       var v=answers[i]||'';
-      full+='Q'+(i)+'. '+QUESTIONS[i-1]+'\n答：'+(v||'（没写）')+'\n\n';
+      full+='Q'+(i+1)+'. '+QUESTIONS[i]+'\n答：'+(v||'（没写）')+'\n\n';
     }
-    var txt='怎么称呼：'+nick+'\n\n'+full;
     nextBtn.disabled=true;nextBtn.textContent='发送中…';
     sendStatus.className='send-status';sendStatus.textContent='';
 
     var payload={
-      _subject:'【默契大测试】'+nick+' 答完啦 ❤',
+      _subject:'【默契大测试】她答完啦 ❤',
       _captcha:'false',
       _template:'table',
-      '称呼':nick,
-      'Q1':answers[1],'Q2':answers[2],'Q3':answers[3],
-      'Q4':answers[4],'Q5':answers[5],'Q6':answers[6],
-      message:txt
+      'Q1':answers[0],'Q2':answers[1],'Q3':answers[2],
+      'Q4':answers[3],'Q5':answers[4],'Q6':answers[5],
+      message:full
     };
 
     fetch(FORM_ENDPOINT,{
@@ -300,13 +304,28 @@ body{
 
   document.getElementById('replayBtn').onclick=function(){
     cur=0;answers={};
-    nickEl.value='';ansEl.value='';
+    ansEl.value='';
     sendStatus.className='send-status';sendStatus.textContent='';
     nextBtn.disabled=false;
     show('s-intro');
   };
 
-  show('s-intro');
+  // 登录判定：账号 + 密码
+  var LOGIN_USER='徐洁';
+  var LOGIN_PASS='20040915';
+  document.getElementById('pwBtn').onclick=function(){
+    var u=document.getElementById('userInput').value.trim();
+    var p=document.getElementById('pwInput').value.trim();
+    var msg=document.getElementById('pwMsg');
+    if(u===LOGIN_USER && p===LOGIN_PASS){
+      show('s-intro');
+    }else{
+      msg.className='send-status send-fail';
+      msg.textContent='账号或密码不对哦，再想想～';
+    }
+  };
+
+  show('s-login');
 })();
 </script>
 </body>
