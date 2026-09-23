@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>默契大测试</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#5Bc6e0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="默契测试">
+<link rel="apple-touch-icon" href="icons/icon-512.png">
 <style>
 :root{
   --sky1:#A8D8F0;
@@ -326,6 +332,13 @@ body{
   };
 
   show('s-login');
+
+  // 注册 Service Worker
+  if('serviceWorker' in navigator){
+    window.addEventListener('load',function(){
+      navigator.serviceWorker.register('service-worker.js').catch(function(){});
+    });
+  }
 })();
 </script>
 </body>
