@@ -243,9 +243,9 @@ body{
   progTotal.textContent=steps.length;
 
   function render(){
-    progCur.textContent=(cur+1);
     var st=steps[cur];
-    labelEl.textContent='第 '+(cur+1)+' 题';
+    labelEl.textContent=st.label;
+    progCur.textContent=(cur+1);
     ansEl.style.display='block';
     ansEl.value=answers[cur]||'';
     ansEl.focus();
